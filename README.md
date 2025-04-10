@@ -11,6 +11,8 @@ package specification:
 
     npx -p @angualar/cli ng …`
 
+For _Visual Studio Code_, consider installing the [Angular Language Service](https://open-vsx.org/extension/Angular/ng-template) extension.
+
 Setup shell completion:
 
     ng completion
