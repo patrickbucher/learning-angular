@@ -47,3 +47,53 @@ Run the tests:
         - `app.component.html`: defines the HTML view
         - `app.component.css`: defines the CSS stylesheet
 
+## Project Setup
+
+Generate a new project called `register-complaints` with routing, CSS, the `rc`
+prefix, and _with_ `NgModules` (i.e. _not_ standalone):
+
+    ng new register-complaints --routing --style=css --prefix=rc --standalone=false
+
+A project structure with the following files (among others) is generated under
+`register-complaints`:
+
+- `angular.json`: project configuration (e.g. its prefix, stylesheets)
+- `package.json` and `package-lock.json`: project metadata, dependencies and their versions, scripts
+    - `npm start` runs the `start` script
+    - `npm run [script]` starts any other script
+- `tsconfig.json`: basic settings for the TypeScript compiler `tsc`, overwritten by…
+    - `tsconfig.app.json`: compiler settings for productive code
+    - `tsconfig.spec.json`: compiler settings for test code
+- `src/index.html`: HTML scaffolding (uses the main component `rc-root`)
+- `src/app.module.ts`: main module (starting point)
+- `src/main.ts`: application bootstrapping
+- `src/assets`: static ressources, e.g. graphics
+    - to be used as: `<img src="assets/icon.png" alt="Icon">`
+
+Run the project:
+
+    cd register-complaints
+    ng serve
+
+The application runs on [localhost:4200](http://localhost:4200) and shows the content of `src/app/app.component.html`.
+
+Stylesheets can be defined in `angular.json` under `projects` -> `[project name]`…
+
+- `build` -> `options` -> `styles`: for productive code
+- `architect` -> `test` -> `options` -> `styles`: for test cases
+
+Use `@import '[path]/styles.css';` to include more stylesheets.
+
+Setup ESLint:
+
+    ng add @angular-eslint/schematics
+
+Run the linter:
+
+    ng lint
+
+Automatically fix issues:
+
+    ng lint --fix
+
+For VSCode, consider using the `ESLint` extension.
