@@ -97,3 +97,40 @@ Automatically fix issues:
     ng lint --fix
 
 For VSCode, consider using the `ESLint` extension.
+
+## Components
+
+A component describes a part of the user interface:
+
+- Template: Visible part (HTML)
+- Class: Logic in TypeScript, annotated using `@Component`
+- Root Component: `AppComponent`
+
+Example:
+
+```typescript
+@Component({
+    selector: 'my-component',
+    template: '<h1>My Component</h1>',
+    styles: [
+        'font-family: sans-serif;'
+    ]
+})
+export class MyComponent {}
+```
+
+- The `selector` defines the name of the _Host Element_, which can be used as
+  `<my-component></my-component>` in other templates, using the defined prefix
+  in the name.
+- The template can be defined inline using `template` or using `templateUrl` as
+  a relative link to a HTML file.
+- The styles can be defined inline using `styles` or using `styleUrls` as an
+  array of relative links to CSS files.
+
+_Bindings_ are used for templates and components to communicate:
+
+- _property bindings_: display data from the component on the template
+- _event bindings_: events on the template influence the data on the component
+
+_View Encapsulation_ limits the scope of CSS declarations to the respective
+component.
