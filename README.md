@@ -134,3 +134,50 @@ _Bindings_ are used for templates and components to communicate:
 
 _View Encapsulation_ limits the scope of CSS declarations to the respective
 component.
+
+Components are declared in `@NgModule` under `declarations`:
+
+```typescript
+import { SomeComponent } from './some/some-component';
+
+@NgModule({
+    declarations: [
+        SomeComponent
+    ]
+})
+```
+
+Generate a new component:
+
+    ng generate component foobar
+
+Which creates `FoobarComponent` with all according files in `src/app/[app-name]/foobar-component`:
+
+- `foobar.component.css`: style sheet
+- `foobar.component.html`: HTML template
+- `foobar.component.spec.ts`: test case
+- `foobar.component.ts`: component
+
+The component is registered in `src/app/app.module.ts` automatically under `declarations`.
+
+Within a component class, properties must either be initialized or declared as optional using the `?` suffix or the `… | undefined` type annotation.
+
+Properties can be displayed directly in templates. Templates support various kinds of syntax:
+
+- Interpolation: `{{…}}`
+    - access to a component's (`public` and `protected`) properties and methods
+    - `{{ birthDate | date }}`
+- Property Binding: `[…]`
+    - assignment to a component's property
+    - `<foo [bar]="qux"></foo>`
+- Event Biding: `(…)`
+    - connect DOM events to component methods
+    - `<foo (click)="doSomething()"></foo>`
+- Two-Way Binding: `[(…)]`
+    - bi-directional property access (read/write)
+    - `<foo [(bar)]="qux></foo>`
+- Structural Directives
+    - define DOM structure, e.g. using `*ngIf`, `*ngFor`
+    - `<p *ngFor="let person of poeple; index as i">{{ i }}) {{ person }}</p>`
+        - automatic variables: `index`, `first`, `last`, `odd`, `even`
+    - `<ng-container>` can be used to apply structural directives without inserting additional elements into the DOM
