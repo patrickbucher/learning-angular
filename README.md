@@ -181,3 +181,11 @@ Properties can be displayed directly in templates. Templates support various kin
     - `<p *ngFor="let person of poeple; index as i">{{ i }}) {{ person }}</p>`
         - automatic variables: `index`, `first`, `last`, `odd`, `even`
     - `<ng-container>` can be used to apply structural directives without inserting additional elements into the DOM
+
+## Interfaces
+
+Generate a new interface (e.g. to be used to model domain objects):
+
+    ng generate interface shared/foobar
+
+Generates an empty interface at `src/app/shared/foobar.ts`.

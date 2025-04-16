@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ComplaintsListComponent } from './complaints-list/complaints-list.component';
+import { ComplaintListComponent } from './complaint-list/complaint-list.component';
 
 @NgModule({
-  declarations: [AppComponent, ComplaintsListComponent],
+  declarations: [AppComponent, ComplaintListComponent],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
   bootstrap: [AppComponent],
