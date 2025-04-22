@@ -182,6 +182,74 @@ Properties can be displayed directly in templates. Templates support various kin
         - automatic variables: `index`, `first`, `last`, `odd`, `even`
     - `<ng-container>` can be used to apply structural directives without inserting additional elements into the DOM
 
+### Property Bindings
+
+Parent components pass data to child components using _property bindings_.
+
+A property must exist in the component class; declared as public and annotated
+using the `Input` decorator.
+
+Template:
+
+```html
+<my-component [someProperty]="expression"></my-component>
+```
+
+Component (TypeScript Class):
+
+```typescript
+import { Component, Input } from '@angular/core';
+
+@Component({
+    selector: 'my-component',
+    // …
+})
+export class MyComponent {
+    @Input() someProperty: string = '';
+}
+```
+
+Properties cannot be made mandatory. They are either optional or have a default
+value. Any kind of object can be set as a property, not just primitives.
+
+Native DOM attributes with (possibly) dynamic values can be defined using the
+same syntax:
+
+```html
+<img [src]="coverUrl">
+```
+
+String interpolation can be used in combination with HTML's native attribute syntax:
+
+```html
+<img src="{{ coverUrl }}">
+```
+
+There are special kinds of property bindings:
+
+1. attribute bindings, e.g. for ARIA attributes, table's `colspan`/`rowspan`
+    - `<td [attr.colspan]="theColspan">`
+2. class bindings to set a CSS class dynamically based on a predicate
+   expression
+    - `<input [class.active]="isActive">`
+    - alternative for multiple classes: `ngClass` directive
+        - `<div [ngClass]="{ active: isActive, 'has-error': hasError }"></div>`
+3. style bindings to set individual styles to elements
+    - `<p [style.color]="theColor">`
+    - alternative for multiple styles: `ngStyle` directive
+        - `<p [ngStyle]="{ color: fgColor, backgroundColor: bgColor }"></p>`
+
+Property bindings are affected by the following _lifecycle_:
+
+1. the component's `constructor()` is called
+2. the input properties are initialized
+3. `ngOnChanges()` is called once at the beginning (and repeatedly for every change)
+4. `ngOnInit()` is called only once
+
+The interfaces `OnInit` (for `ngOnInit(): void`) and `OnChanges` (for
+`ngOnchanges(): void`) from Angular Core have to be implemented in the
+component class.
+
 ## Interfaces
 
 Generate a new interface (e.g. to be used to model domain objects):
