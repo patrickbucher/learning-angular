@@ -1,11 +1,7 @@
 <h2>Complaints</h2>
 <ol>
   <li *ngFor="let complaint of complaints">
-    <h3>
-      {{ complaint.author }}: <em>{{ complaint.title }}</em> (about
-      {{ complaint.offender }} in {{ complaint.place }} on
-      {{ complaint.happened | date }})
-    </h3>
-    <p>{{ complaint.issue }}</p>
+    <button (click)="activate(complaint.id)">Activate</button>
+    <rc-complaint-item [complaint]="complaint" ></rc-complaint-item>
   </li>
 </ol>

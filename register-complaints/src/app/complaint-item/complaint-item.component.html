@@ -1,0 +1,8 @@
+<div *ngIf="complaint" [class.selected]="complaint.selected">
+  <h3>
+    {{ complaint.author }}: <em>{{ complaint.title }}</em> (about
+    {{ complaint.offender }} in {{ complaint.place }} on
+    {{ complaint.happened | date }})
+  </h3>
+  <p>{{ complaint.issue }}</p>
+</div>
