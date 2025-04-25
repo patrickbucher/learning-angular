@@ -250,6 +250,78 @@ The interfaces `OnInit` (for `ngOnInit(): void`) and `OnChanges` (for
 `ngOnchanges(): void`) from Angular Core have to be implemented in the
 component class.
 
+### Event Bindings
+
+A component's method (`handleEvent`) can be bound to an event using the following syntax:
+
+```html
+<my-component (theEvent)="handleEvent()"></my-component>
+```
+
+Events can be native DOM events:
+
+```html
+<button (click)="handleClick()">Click Here!</button>
+```
+
+Which are handled in the component by a respective method:
+
+```typescript
+export class MyComponent {
+    handleClick() {
+        console.log('click');
+    }
+}
+```
+
+The event's payload can be passed optionally using the pre-defined `$event` variable:
+
+```html
+<button (click)="handleClick($event)">Click Here!</button>
+```
+
+Which becomes available as a `PointerEvent` in the parameter list of the method:
+
+```typescript
+export class MyComponent {
+    handleClick(e: PointerEvent) {
+        console.log(e);
+    }
+}
+```
+
+Defining custom events requires:
+
+1. an event emitter on the child component, to be used in the template code of the parent component
+2. a handler method on the parent component, which is assigned to the child component's event
+
+Example (template of the parent component):
+
+```html
+<child-component (customEvent)="handleEvent()"></child-component>
+```
+
+The parent component implements the `handleEvent` method.
+
+The child component defines the custom event:
+
+```typescript
+export class ChildComponent {
+    @Output() customEvent = new EventEmitter<string>();
+    triggerEvent() {
+        this.customEvent.emit('hello');
+    }
+}
+```
+
+Calling the `triggerEvent` method will emit the custom event, about which the
+parent component is notified through the invocation of its `handleEvent` method,
+e.g.:
+
+```html
+<button (click)="triggerEvent()">Trigger Event</button>
+```
+
 ## Interfaces
 
 Generate a new interface (e.g. to be used to model domain objects):
