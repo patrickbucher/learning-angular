@@ -329,3 +329,51 @@ Generate a new interface (e.g. to be used to model domain objects):
     ng generate interface shared/foobar
 
 Generates an empty interface at `src/app/shared/foobar.ts`.
+
+## Modules
+
+- Applications are structured into logical groups (i.e. by features) using
+  _modules_.
+- The central module of the application is called the _root module_ and defined
+  in a class called `AppModule` defined in `main.ts`.
+- Module classes have the name suffix `Module` by convention. Their
+  implementation consists of an empty class, since everything is declared using
+  the `NgModule` decorator, which has the following properties:
+    - `declarations`: Parts (components, pipes, providers) being defined within
+      the module, i.e. in the same folder. No part must be defined in more than
+      one module.
+    - `imports`: Parts that are used within the module, e.g. the
+      `RouterModule`, the `BrowserModule` etc.
+    - `exports`: Parts from the module being made available to other modules.
+- _Shared modules_ provide commonly used functionality beyond specific
+  features. They usually don't use routing.
+
+Modules are generated as follows:
+
+```sh
+ng generate module FooModule --module BarModule
+```
+
+Or with routing enabled:
+
+```sh
+ng generate module FooModule --module BarModule --routing
+```
+
+This generates the module `FooModule` within the `BarModule`. For top-level
+modules, the `AppModule` is used with the `--module` option. The parent module
+will automatically import the newly defined module.
+
+A component (`FooComponent`) can be defined within a module (`BarModule`) as follows:
+
+```sh
+ng generate component FooComponent --module BarModule
+```
+
+Or:
+
+```sh
+ng generate component bar/foo
+```
+
+TODO: test syntax
