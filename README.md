@@ -377,3 +377,95 @@ ng generate component bar/foo
 ```
 
 TODO: test syntax
+
+## Services
+
+In Angular, a _service_ is a TypeScript class that offers functionality to be
+re-used by components or other services. Following the _Inversion of Control_
+principle, the service is not instantiated where it is used, but requested as a
+dependency and provided to the constructor from the outside (_Dependency
+Injection_). In Angular, the framework provides those instances, usually as a
+_Singleton_, i.e. the same service instance is shared over its usages in
+different places.
+
+```typescript
+@Component({…})
+export class MyComponent {
+  constructor(private myService: MyService) {}
+}
+```
+
+A service class must be annoted as `@Injectable` in order to be automatically
+instantiated for dependency injection:
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class MyService {
+  consructor(private otherService: SomeOtherService) {}
+}
+```
+
+This service depends on another service, which is also injected as a dependency.
+
+To generate a service:
+
+```sh
+ng generate service my
+```
+
+The `-service` (file name) resp. `Service` (class name) suffix is added
+automatically.
+
+A _provider_ needs to be registered 1) either explicitly in a module, or 2) it
+registers itself. The second variant is preferred nowadays, because it allows
+for _three shaking_ (omitting unreferenced classes in the compiled bundle).
+
+For the explicit variant 1), the service class is listed under `providers` in
+the `@NgModule` decorator:
+
+```typescript
+@NgModule({
+  providers: [MyService]
+})
+export class AppModule {}
+```
+
+A service thus registered in the `AppModule` is injectable througout the entire
+application.
+
+Since the service is referenced from the module, the service class is always
+present in the compiled bundle, even if it is never used as a dependency.
+
+If the service registers itself as in variant 2), this problem is solved:
+
+```typescript
+@Injectable({
+  providedIn: 'root'
+})
+export class MyService {}
+```
+
+A specific service can be replaced by another implementation, be it a class
+using the `useClass` property, a value using the `useValue` property, or using
+a factory for more involved instantiations that can make use of other
+dependencies:
+
+```typescript
+@NgModule({
+  providers: [
+    { provide: SomeService, useClass: SomeServiceImplementation },
+    { provide: AnotherService, useValue: { foo: () => 'hello' } },
+    { provide: InvolvedService, useFactory: (dep: Dep) => new RichService(dep), deps: [Dep] }
+  ]
+})
+export class AppModule {}
+```
+
+To inject _values_ instead of services, see the `InjectionToken` concept
+combined with the `inject` function.
+
+During initialization, injection can also be performed programmatically using
+the `inject` function.
+
